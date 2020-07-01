@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wedding/main.dart';
 import 'package:wedding/news/debug_data.dart';
 
 import 'feeds.dart';
@@ -38,6 +39,7 @@ class _NewsPageState extends State<NewsPage> {
     newsList = data.items;
     });
     };
+    MyApp.analytics.logViewItemList(itemCategory: "news_load");
   }
   @override
   Widget build(BuildContext context) {

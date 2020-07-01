@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:wedding/Colors.dart';
 import 'file:///C:/Users/User/AndroidStudioProjects/wedding/lib/tabs/tab_bar.dart';
@@ -8,8 +10,14 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+  FirebaseAnalyticsObserver(analytics: analytics);
+
   @override
   Widget build(BuildContext context) {
+    analytics.logAppOpen();
+    analytics.logEvent(name: "open app");
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
