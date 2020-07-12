@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wedding/main.dart';
-import 'package:wedding/news/debug_data.dart';
+import 'package:wedding/news/news_data.dart';
 
 import 'feeds.dart';
 
@@ -21,24 +22,18 @@ class _NewsPageState extends State<NewsPage> {
   }
 
   _getNews() async {
-    //final stack =
-    //contentstack.Stack('api_key', 'delivery_token', 'environment');
-    //final query = stack.contentType('news').entry().query();
-    final data = DebugData();
-//    await query.find().then((response) {
-//      isDataAvailable = true;
-//      setState(() {
-//        newsList =  response['entries'];
-//      });
-//    }).catchError((error) {
-//      print(error.message.toString());
-//    });
-    {
+    final newsData = NewsData();
+    await Firestore.instance
+        .collection('news')
+        .snapshots()
+        .listen((data) =>
+        data.documents.forEach((doc) => newsData.add(doc)))
+    .onError((x) => print(x));
+
     isDataAvailable = true;
     await setState(() {
-    newsList = data.items;
+    newsList = newsData.items;
     });
-    };
     MyApp.analytics.logViewItemList(itemCategory: "news_load");
   }
   @override

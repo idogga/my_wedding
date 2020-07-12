@@ -15,3 +15,9 @@ const Map<int, Color> _color = {
   900: Color(0xEFC77B7B),
 };
 const MaterialColor MAIN_COLOR = MaterialColor(0xFFC77B7B, _color);
+
+
+const Color themeColor = Color(0xEFC77B7B);
+const Color primaryColor = Color(0xff203152);
+const Color greyColor = Color(0xffaeaeae);
+const Color greyColor2 = Color(0xffE8E8E8);
