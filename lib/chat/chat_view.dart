@@ -21,8 +21,6 @@ class ChatView extends StatelessWidget {
         centerTitle: true,
       ),
       body: ChatScreen(
-        peerId: peerId,
-        peerAvatar: peerAvatar,
       ),
     );
   }

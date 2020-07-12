@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "979975989948-a23fbfjpgfoo2cfj0oualpmd2q7p1oi6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lenkostudio.wedding",
+            "certificate_hash": "86a56a0bf03761c06ae9b7df13a43349e83a0217"
+          }
+        },
+        {
           "client_id": "979975989948-r9nc1ap3rsrtnr1811m4o8rlulta736m.apps.googleusercontent.com",
           "client_type": 3
         }

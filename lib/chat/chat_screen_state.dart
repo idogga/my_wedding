@@ -16,10 +16,8 @@ import 'chat_screen.dart';
 
 
 class ChatScreenState extends State<ChatScreen> {
-  ChatScreenState({Key key, @required this.peerId, @required this.peerAvatar});
+  ChatScreenState({Key key});
 
-  String peerId;
-  String peerAvatar;
   String id;
 
   var listMessage;
@@ -65,13 +63,13 @@ class ChatScreenState extends State<ChatScreen> {
   readLocal() async {
     prefs = await SharedPreferences.getInstance();
     id = prefs.getString('id') ?? '';
-    if (id.hashCode <= peerId.hashCode) {
-      groupChatId = '$id-$peerId';
-    } else {
-      groupChatId = '$peerId-$id';
-    }
+    //if (id.hashCode <= peerId.hashCode) {
+   //   groupChatId = '$id-$peerId';
+   // } else {
+      groupChatId = id;
+   // }
 
-    Firestore.instance.collection('users').document(id).updateData({'chattingWith': peerId});
+    //Firestore.instance.collection('users').document(id).updateData({'chattingWith': peerId});
 
     setState(() {});
   }
@@ -130,7 +128,6 @@ class ChatScreenState extends State<ChatScreen> {
           documentReference,
           {
             'idFrom': id,
-            'idTo': peerId,
             'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
             'content': content,
             'type': type
@@ -240,7 +237,7 @@ class ChatScreenState extends State<ChatScreen> {
                       height: 35.0,
                       padding: EdgeInsets.all(10.0),
                     ),
-                    imageUrl: peerAvatar,
+                    //imageUrl: peerAvatar,
                     width: 35.0,
                     height: 35.0,
                     fit: BoxFit.cover,
@@ -436,88 +433,88 @@ class ChatScreenState extends State<ChatScreen> {
                   fit: BoxFit.cover,
                 ),
               ),
-              FlatButton(
-                onPressed: () => onSendMessage('mimi2', 2),
-                child: Image.asset(
-                  'images/mimi2.gif',
-                  width: 50.0,
-                  height: 50.0,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              FlatButton(
-                onPressed: () => onSendMessage('mimi3', 2),
-                child: Image.asset(
-                  'images/mimi3.gif',
-                  width: 50.0,
-                  height: 50.0,
-                  fit: BoxFit.cover,
-                ),
-              )
-            ],
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          ),
-          Row(
-            children: <Widget>[
-              FlatButton(
-                onPressed: () => onSendMessage('mimi4', 2),
-                child: Image.asset(
-                  'images/mimi4.gif',
-                  width: 50.0,
-                  height: 50.0,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              FlatButton(
-                onPressed: () => onSendMessage('mimi5', 2),
-                child: Image.asset(
-                  'images/mimi5.gif',
-                  width: 50.0,
-                  height: 50.0,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              FlatButton(
-                onPressed: () => onSendMessage('mimi6', 2),
-                child: Image.asset(
-                  'images/mimi6.gif',
-                  width: 50.0,
-                  height: 50.0,
-                  fit: BoxFit.cover,
-                ),
-              )
-            ],
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          ),
-          Row(
-            children: <Widget>[
-              FlatButton(
-                onPressed: () => onSendMessage('mimi7', 2),
-                child: Image.asset(
-                  'images/mimi7.gif',
-                  width: 50.0,
-                  height: 50.0,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              FlatButton(
-                onPressed: () => onSendMessage('mimi8', 2),
-                child: Image.asset(
-                  'images/mimi8.gif',
-                  width: 50.0,
-                  height: 50.0,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              FlatButton(
-                onPressed: () => onSendMessage('mimi9', 2),
-                child: Image.asset(
-                  'images/mimi9.gif',
-                  width: 50.0,
-                  height: 50.0,
-                  fit: BoxFit.cover,
-                ),
-              )
+//              FlatButton(
+//                onPressed: () => onSendMessage('mimi2', 2),
+//                child: Image.asset(
+//                  'images/mimi2.gif',
+//                  width: 50.0,
+//                  height: 50.0,
+//                  fit: BoxFit.cover,
+//                ),
+//              ),
+//              FlatButton(
+//                onPressed: () => onSendMessage('mimi3', 2),
+//                child: Image.asset(
+//                  'images/mimi3.gif',
+//                  width: 50.0,
+//                  height: 50.0,
+//                  fit: BoxFit.cover,
+//                ),
+//              )
+//            ],
+//            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//          ),
+//          Row(
+//            children: <Widget>[
+//              FlatButton(
+//                onPressed: () => onSendMessage('mimi4', 2),
+//                child: Image.asset(
+//                  'images/mimi4.gif',
+//                  width: 50.0,
+//                  height: 50.0,
+//                  fit: BoxFit.cover,
+//                ),
+//              ),
+//              FlatButton(
+//                onPressed: () => onSendMessage('mimi5', 2),
+//                child: Image.asset(
+//                  'images/mimi5.gif',
+//                  width: 50.0,
+//                  height: 50.0,
+//                  fit: BoxFit.cover,
+//                ),
+//              ),
+//              FlatButton(
+//                onPressed: () => onSendMessage('mimi6', 2),
+//                child: Image.asset(
+//                  'images/mimi6.gif',
+//                  width: 50.0,
+//                  height: 50.0,
+//                  fit: BoxFit.cover,
+//                ),
+//              )
+//            ],
+//            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//          ),
+//          Row(
+//            children: <Widget>[
+//              FlatButton(
+//                onPressed: () => onSendMessage('mimi7', 2),
+//                child: Image.asset(
+//                  'images/mimi7.gif',
+//                  width: 50.0,
+//                  height: 50.0,
+//                  fit: BoxFit.cover,
+//                ),
+//              ),
+//              FlatButton(
+//                onPressed: () => onSendMessage('mimi8', 2),
+//                child: Image.asset(
+//                  'images/mimi8.gif',
+//                  width: 50.0,
+//                  height: 50.0,
+//                  fit: BoxFit.cover,
+//                ),
+//              ),
+//              FlatButton(
+//                onPressed: () => onSendMessage('mimi9', 2),
+//                child: Image.asset(
+//                  'images/mimi9.gif',
+//                  width: 50.0,
+//                  height: 50.0,
+//                  fit: BoxFit.cover,
+//                ),
+//              )
             ],
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           )
