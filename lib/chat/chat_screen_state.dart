@@ -19,6 +19,7 @@ class ChatScreenState extends State<ChatScreen> {
   ChatScreenState({Key key});
 
   String id;
+  String avatar_link;
 
   var listMessage;
   String groupChatId;
@@ -40,7 +41,7 @@ class ChatScreenState extends State<ChatScreen> {
     super.initState();
     focusNode.addListener(onFocusChange);
 
-    groupChatId = '';
+    groupChatId = 'artyom_and_kate';
 
     isLoading = false;
     isShowSticker = false;
@@ -63,13 +64,8 @@ class ChatScreenState extends State<ChatScreen> {
   readLocal() async {
     prefs = await SharedPreferences.getInstance();
     id = prefs.getString('id') ?? '';
-    //if (id.hashCode <= peerId.hashCode) {
-   //   groupChatId = '$id-$peerId';
-   // } else {
-      groupChatId = id;
-   // }
-
-    //Firestore.instance.collection('users').document(id).updateData({'chattingWith': peerId});
+    avatar_link = prefs.getString('photoUrl') ?? '';
+     groupChatId =prefs.getString('chattingWith') ?? groupChatId;
 
     setState(() {});
   }
@@ -130,13 +126,14 @@ class ChatScreenState extends State<ChatScreen> {
             'idFrom': id,
             'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
             'content': content,
-            'type': type
+            'type': type,
+            'peer_avatar_link': avatar_link,
           },
         );
       });
       listScrollController.animateTo(0.0, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
     } else {
-      _showToast('Нечего отыслать :(');
+      _showToast('Нечего отсылать :(');
     }
   }
 
@@ -237,7 +234,7 @@ class ChatScreenState extends State<ChatScreen> {
                       height: 35.0,
                       padding: EdgeInsets.all(10.0),
                     ),
-                    //imageUrl: peerAvatar,
+                    imageUrl: document['peer_avatar_link'],
                     width: 35.0,
                     height: 35.0,
                     fit: BoxFit.cover,
