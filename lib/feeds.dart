@@ -26,8 +26,7 @@ class Feeds extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => NewsDetail(
-                      newsTitle: newsList[index].title,
-                      newsDetail: newsList[index].icon,
+                      item: newsList[index]
                     )),
               );
             },
@@ -38,13 +37,13 @@ class Feeds extends StatelessWidget {
             ),
             leading: CircleAvatar(
               radius: 25.0,
-              //backgroundImage: ImageIcon(Icons.add_box), // AssetImage('assets/red_logo.png'),
+              backgroundImage: NetworkImage(newsList[index].image),
               backgroundColor: Colors.red,
             ),
             subtitle: Container(
               padding: EdgeInsets.all(4),
               child: Text(
-                newsList[index].icon,
+                newsList[index].data,
                 style: TextStyle(fontSize: 15),
                 maxLines: 2,
               ),

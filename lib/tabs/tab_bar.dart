@@ -4,8 +4,8 @@ import 'package:wedding/tabs/tab_item.dart';
 import 'half_clipper.dart';
 import 'half_painter.dart';
 
-const double CIRCLE_SIZE = 60;
-const double ARC_HEIGHT = 70;
+const double CIRCLE_SIZE = 50;
+const double ARC_HEIGHT = 15;
 const double ARC_WIDTH = 90;
 const double CIRCLE_OUTLINE = 10;
 const double SHADOW_ALLOWANCE = 20;
@@ -20,7 +20,6 @@ class FancyBottomNavigation extends StatefulWidget {
         this.circleColor,
         this.activeIconColor,
         this.inactiveIconColor,
-        this.textColor,
         this.barBackgroundColor})
       : assert(onTabChangedListener != null),
         assert(tabs != null),
@@ -30,7 +29,6 @@ class FancyBottomNavigation extends StatefulWidget {
   final Color circleColor;
   final Color activeIconColor;
   final Color inactiveIconColor;
-  final Color textColor;
   final Color barBackgroundColor;
   final List<TabData> tabs;
   final int initialSelection;
@@ -54,7 +52,6 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
   Color activeIconColor;
   Color inactiveIconColor;
   Color barBackgroundColor;
-  Color textColor;
 
   @override
   void didChangeDependencies() {
@@ -79,11 +76,6 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
         ? Color(0xFF212121)
         : Colors.white
         : widget.barBackgroundColor;
-    textColor = (widget.textColor == null)
-        ? (Theme.of(context).brightness == Brightness.dark)
-        ? Colors.white
-        : Colors.black54
-        : widget.textColor;
     inactiveIconColor = (widget.inactiveIconColor == null)
         ? (Theme.of(context).brightness == Brightness.dark)
         ? Colors.white
@@ -129,16 +121,14 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
                 uniqueKey: t.key,
                 selected: t.key == widget.tabs[currentSelected].key,
                 iconData: t.iconData,
-                title: t.title,
                 iconColor: inactiveIconColor,
-                textColor: textColor,
                 callbackFunction: (uniqueKey) {
                   int selected = widget.tabs
                       .indexWhere((tabData) => tabData.key == uniqueKey);
                   widget.onTabChangedListener(selected);
                   _setSelected(uniqueKey);
                   _initAnimationAndStart(_circleAlignX, 1);
-                }))
+                },))
                 .toList(),
           ),
         ),
@@ -150,7 +140,7 @@ class FancyBottomNavigationState extends State<FancyBottomNavigation>
               curve: Curves.easeOut,
               alignment: Alignment(_circleAlignX, 1),
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 15),
+                padding: const EdgeInsets.only(bottom: 0),
                 child: FractionallySizedBox(
                   widthFactor: 1 / widget.tabs.length,
                   child: GestureDetector(

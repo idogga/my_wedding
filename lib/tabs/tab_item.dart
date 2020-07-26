@@ -13,17 +13,13 @@ class TabItem extends StatelessWidget {
       {@required this.uniqueKey,
         @required this.selected,
         @required this.iconData,
-        @required this.title,
         @required this.callbackFunction,
-        @required this.textColor,
         @required this.iconColor});
 
   final UniqueKey uniqueKey;
-  final String title;
   final IconData iconData;
   final bool selected;
   final Function(UniqueKey uniqueKey) callbackFunction;
-  final Color textColor;
   final Color iconColor;
 
   final double iconYAlign = ICON_ON;
@@ -36,23 +32,6 @@ class TabItem extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: AnimatedAlign(
-                duration: Duration(milliseconds: ANIM_DURATION),
-                alignment: Alignment(0, (selected) ? TEXT_ON : TEXT_OFF),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    title,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, color: textColor),
-                  ),
-                )),
-          ),
           Container(
             height: double.infinity,
             width: double.infinity,
