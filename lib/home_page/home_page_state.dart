@@ -32,9 +32,6 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Fancy Bottom Navigation"),
-      ),
       body: Container(
         decoration: BoxDecoration(color: Colors.white),
         child: Center(

@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Colors.dart';
 import '../full_photo.dart';
 import '../loading.dart';
+import '../main.dart';
 import 'chat_screen.dart';
 
 
@@ -135,6 +136,7 @@ class ChatScreenState extends State<ChatScreen> {
     } else {
       _showToast('Нечего отсылать :(');
     }
+    MyApp.analytics.logViewItemList(itemCategory: "message_send");
   }
 
   Widget buildItem(int index, DocumentSnapshot document) {
@@ -389,9 +391,19 @@ class ChatScreenState extends State<ChatScreen> {
       toastDuration: Duration(seconds: 2),
     );
   }
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+    return Scaffold(
+        appBar: AppBar(
+        title: Text(
+        'Общий чат',
+        style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+    ),
+    centerTitle: true,
+    ),
+    body: WillPopScope(
+
       child: Stack(
         children: <Widget>[
           Column(
@@ -412,6 +424,7 @@ class ChatScreenState extends State<ChatScreen> {
         ],
       ),
       onWillPop: onBackPress,
+    )
     );
   }
 
@@ -565,7 +578,7 @@ class ChatScreenState extends State<ChatScreen> {
                 style: TextStyle(color: primaryColor, fontSize: 15.0),
                 controller: textEditingController,
                 decoration: InputDecoration.collapsed(
-                  hintText: 'Type your message...',
+                  hintText: 'Напишите сообщение...',
                   hintStyle: TextStyle(color: greyColor),
                 ),
                 focusNode: focusNode,

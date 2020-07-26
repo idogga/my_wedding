@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wedding/main.dart';
 import 'package:wedding/news/news_data.dart';
 
+import 'Colors.dart';
 import 'feeds.dart';
 
 class NewsPage extends StatefulWidget {
@@ -39,6 +40,13 @@ class _NewsPageState extends State<NewsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Новости',
+            style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+        ),
         body: isDataAvailable
             ? Feeds(newsList: this.newsList)
             : Center(child: CircularProgressIndicator()));

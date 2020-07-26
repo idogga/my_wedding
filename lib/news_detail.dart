@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:wedding/Colors.dart';
 import 'package:wedding/news/new_item.dart';
 
 class NewsDetail extends StatelessWidget {
@@ -13,8 +15,10 @@ class NewsDetail extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          item.title,
+            item.title,
+          style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
         ),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -35,10 +39,17 @@ class NewsDetail extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              CircleAvatar(
-                radius: 25.0,
-                backgroundImage: NetworkImage(item.image),
-                backgroundColor: Colors.red,),
+              CachedNetworkImage(
+                placeholder: (context, url) => Container(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                  ),
+                  padding: EdgeInsets.all(10.0),
+                ),
+                imageUrl: item.image,
+                fit: BoxFit.cover,
+              ),
               Container(
                 padding: EdgeInsets.all(8),
               child: Text(
