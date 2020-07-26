@@ -41,21 +41,16 @@ class HomePageState extends State<HomePage> {
       bottomNavigationBar: FancyBottomNavigation(
         tabs: [
           TabData(
-              iconData: Icons.home,
-              title: "Home",
-              onclick: () {
-                final FancyBottomNavigationState fState =
-                    bottomNavigationKey.currentState;
-                fState.setPage(2);
-              }),
+              iconData: Icons.new_releases,
+              title: "Basket"),
           TabData(
-              iconData: Icons.search,
-              title: "Search",
-              onclick: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => NewsPage()))),
-          TabData(iconData: Icons.shopping_cart, title: "Basket")
+              iconData: Icons.chat,
+              title: "Home"),
+          TabData(
+              iconData: Icons.supervised_user_circle,
+              title: "Search")
         ],
-        initialSelection: 1,
+        initialSelection: 0,
         key: bottomNavigationKey,
         onTabChangedListener: (position) {
           setState(() {
@@ -126,12 +121,14 @@ class HomePageState extends State<HomePage> {
   _getPage(int page) {
     switch (page) {
       case 0:
-        return ChatScreen();
+        return NewsPage();
       case 1:
+        return ChatScreen();
+      case 2:
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text("This is the search page"),
+            Text("Здесь будет страница пользователя"),
             RaisedButton(
               child: Text(
                 "Start new page",
@@ -146,7 +143,7 @@ class HomePageState extends State<HomePage> {
           ],
         );
       default:
-        return NewsPage();
+        throw Exception('Непонятный тип экрана');
     }
   }
 }
