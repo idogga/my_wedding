@@ -1,21 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:wedding/Colors.dart';
 import 'package:wedding/news/new_item.dart';
 
 class NewsDetail extends StatelessWidget {
-
   final NewsItem item;
 
-  NewsDetail({Key key, @required this.item})
-      : super(key: key);
+  NewsDetail({Key key, @required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            item.title,
+          item.title,
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -28,11 +27,13 @@ class NewsDetail extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(4),
                 child: Text(
-                  item.create_date.toDate().toIso8601String(),
+                  DateFormat('dd MM kk:mm')
+                      .format(item.create_date.toDate()),
                   style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
                   textAlign: TextAlign.right,
                 ),
-              ),Container(
+              ),
+              Container(
                 padding: EdgeInsets.all(4),
                 child: Text(
                   item.data,
@@ -52,16 +53,16 @@ class NewsDetail extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.all(8),
-              child: Text(
-                item.author,
-                style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
-                textAlign: TextAlign.right,
-              ),
+                child: Text(
+                  item.author,
+                  style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+                  textAlign: TextAlign.right,
+                ),
               ),
             ],
-            ),
           ),
         ),
+      ),
     );
   }
 }

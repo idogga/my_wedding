@@ -1,7 +1,6 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class NewsItem{
+class NewsItem {
   String get title => _document['title'];
   String get image => _document['image'];
   String get data => _document['data'];
