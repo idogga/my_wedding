@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Colors.dart';
 import '../full_photo.dart';
 import '../loading.dart';
+import '../main.dart';
 import 'chat_screen.dart';
 
 
@@ -19,6 +20,7 @@ class ChatScreenState extends State<ChatScreen> {
   ChatScreenState({Key key});
 
   String id;
+  String avatar_link;
 
   var listMessage;
   String groupChatId;
@@ -40,7 +42,7 @@ class ChatScreenState extends State<ChatScreen> {
     super.initState();
     focusNode.addListener(onFocusChange);
 
-    groupChatId = '';
+    groupChatId = 'artyom_and_kate';
 
     isLoading = false;
     isShowSticker = false;
@@ -63,13 +65,8 @@ class ChatScreenState extends State<ChatScreen> {
   readLocal() async {
     prefs = await SharedPreferences.getInstance();
     id = prefs.getString('id') ?? '';
-    //if (id.hashCode <= peerId.hashCode) {
-   //   groupChatId = '$id-$peerId';
-   // } else {
-      groupChatId = id;
-   // }
-
-    //Firestore.instance.collection('users').document(id).updateData({'chattingWith': peerId});
+    avatar_link = prefs.getString('photoUrl') ?? '';
+     groupChatId =prefs.getString('chattingWith') ?? groupChatId;
 
     setState(() {});
   }
@@ -130,14 +127,16 @@ class ChatScreenState extends State<ChatScreen> {
             'idFrom': id,
             'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
             'content': content,
-            'type': type
+            'type': type,
+            'peer_avatar_link': avatar_link,
           },
         );
       });
       listScrollController.animateTo(0.0, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
     } else {
-      _showToast('Нечего отыслать :(');
+      _showToast('Нечего отсылать :(');
     }
+    MyApp.analytics.logViewItemList(itemCategory: "message_send");
   }
 
   Widget buildItem(int index, DocumentSnapshot document) {
@@ -237,7 +236,7 @@ class ChatScreenState extends State<ChatScreen> {
                       height: 35.0,
                       padding: EdgeInsets.all(10.0),
                     ),
-                    //imageUrl: peerAvatar,
+                    imageUrl: document['peer_avatar_link'],
                     width: 35.0,
                     height: 35.0,
                     fit: BoxFit.cover,
@@ -322,7 +321,7 @@ class ChatScreenState extends State<ChatScreen> {
             isLastMessageLeft(index)
                 ? Container(
               child: Text(
-                DateFormat('dd MMM kk:mm')
+                DateFormat('dd MM kk:mm')
                     .format(DateTime.fromMillisecondsSinceEpoch(int.parse(document['timestamp']))),
                 style: TextStyle(color: greyColor, fontSize: 12.0, fontStyle: FontStyle.italic),
               ),
@@ -359,7 +358,6 @@ class ChatScreenState extends State<ChatScreen> {
         isShowSticker = false;
       });
     } else {
-      Firestore.instance.collection('users').document(id).updateData({'chattingWith': null});
       Navigator.pop(context);
     }
 
@@ -392,9 +390,19 @@ class ChatScreenState extends State<ChatScreen> {
       toastDuration: Duration(seconds: 2),
     );
   }
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+    return Scaffold(
+        appBar: AppBar(
+        title: Text(
+        'Общий чат',
+        style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+    ),
+    centerTitle: true,
+    ),
+    body: WillPopScope(
+
       child: Stack(
         children: <Widget>[
           Column(
@@ -415,6 +423,7 @@ class ChatScreenState extends State<ChatScreen> {
         ],
       ),
       onWillPop: onBackPress,
+    )
     );
   }
 
@@ -433,88 +442,115 @@ class ChatScreenState extends State<ChatScreen> {
                   fit: BoxFit.cover,
                 ),
               ),
-//              FlatButton(
-//                onPressed: () => onSendMessage('mimi2', 2),
-//                child: Image.asset(
-//                  'images/mimi2.gif',
-//                  width: 50.0,
-//                  height: 50.0,
-//                  fit: BoxFit.cover,
-//                ),
-//              ),
-//              FlatButton(
-//                onPressed: () => onSendMessage('mimi3', 2),
-//                child: Image.asset(
-//                  'images/mimi3.gif',
-//                  width: 50.0,
-//                  height: 50.0,
-//                  fit: BoxFit.cover,
-//                ),
-//              )
-//            ],
-//            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//          ),
-//          Row(
-//            children: <Widget>[
-//              FlatButton(
-//                onPressed: () => onSendMessage('mimi4', 2),
-//                child: Image.asset(
-//                  'images/mimi4.gif',
-//                  width: 50.0,
-//                  height: 50.0,
-//                  fit: BoxFit.cover,
-//                ),
-//              ),
-//              FlatButton(
-//                onPressed: () => onSendMessage('mimi5', 2),
-//                child: Image.asset(
-//                  'images/mimi5.gif',
-//                  width: 50.0,
-//                  height: 50.0,
-//                  fit: BoxFit.cover,
-//                ),
-//              ),
-//              FlatButton(
-//                onPressed: () => onSendMessage('mimi6', 2),
-//                child: Image.asset(
-//                  'images/mimi6.gif',
-//                  width: 50.0,
-//                  height: 50.0,
-//                  fit: BoxFit.cover,
-//                ),
-//              )
-//            ],
-//            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//          ),
-//          Row(
-//            children: <Widget>[
-//              FlatButton(
-//                onPressed: () => onSendMessage('mimi7', 2),
-//                child: Image.asset(
-//                  'images/mimi7.gif',
-//                  width: 50.0,
-//                  height: 50.0,
-//                  fit: BoxFit.cover,
-//                ),
-//              ),
-//              FlatButton(
-//                onPressed: () => onSendMessage('mimi8', 2),
-//                child: Image.asset(
-//                  'images/mimi8.gif',
-//                  width: 50.0,
-//                  height: 50.0,
-//                  fit: BoxFit.cover,
-//                ),
-//              ),
-//              FlatButton(
-//                onPressed: () => onSendMessage('mimi9', 2),
-//                child: Image.asset(
-//                  'images/mimi9.gif',
-//                  width: 50.0,
-//                  height: 50.0,
-//                  fit: BoxFit.cover,
-//                ),
-//              )
+              FlatButton(
+                onPressed: () => onSendMessage('mimi2', 2),
+                child: Image.asset(
+                  'images/mimi2.gif',
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              FlatButton(
+                onPressed: () => onSendMessage('mimi3', 2),
+                child: Image.asset(
+                  'images/mimi3.gif',
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              FlatButton(
+                onPressed: () => onSendMessage('mimi4', 2),
+                child: Image.asset(
+                  'images/mimi4.gif',
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                ),
+              )
+            ],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ),
+          Row(
+            children: <Widget>[
+              FlatButton(
+                onPressed: () => onSendMessage('mimi5', 2),
+                child: Image.asset(
+                  'images/mimi5.gif',
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              FlatButton(
+                onPressed: () => onSendMessage('mimi6', 2),
+                child: Image.asset(
+                  'images/mimi6.gif',
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              FlatButton(
+                onPressed: () => onSendMessage('mimi7', 2),
+                child: Image.asset(
+                  'images/mimi7.gif',
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              FlatButton(
+                onPressed: () => onSendMessage('mimi8', 2),
+                child: Image.asset(
+                  'images/mimi8.gif',
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                ),
+              )
+            ],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ),
+          Row(
+            children: <Widget>[
+              FlatButton(
+                onPressed: () => onSendMessage('mimi9', 2),
+                child: Image.asset(
+                  'images/mimi9.gif',
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              FlatButton(
+                onPressed: () => onSendMessage('mimi10', 2),
+                child: Image.asset(
+                  'images/mimi10.gif',
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              FlatButton(
+                onPressed: () => onSendMessage('mimi11', 2),
+                child: Image.asset(
+                  'images/mimi11.gif',
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              FlatButton(
+                onPressed: () => onSendMessage('mimi12', 2),
+                child: Image.asset(
+                  'images/mimi12.gif',
+                  width: 50.0,
+                  height: 50.0,
+                  fit: BoxFit.cover,
+                ),
+              )
             ],
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           )
@@ -568,7 +604,7 @@ class ChatScreenState extends State<ChatScreen> {
                 style: TextStyle(color: primaryColor, fontSize: 15.0),
                 controller: textEditingController,
                 decoration: InputDecoration.collapsed(
-                  hintText: 'Type your message...',
+                  hintText: 'Напиши сообщение...',
                   hintStyle: TextStyle(color: greyColor),
                 ),
                 focusNode: focusNode,

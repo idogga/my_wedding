@@ -80,7 +80,7 @@ class LoginScreenState extends State<LoginScreen> {
           'photoUrl': firebaseUser.photoUrl,
           'id': firebaseUser.uid,
           'createdAt': DateTime.now().millisecondsSinceEpoch.toString(),
-          'chattingWith': null
+          'chattingWith': 'artyom_and_kate'
         });
 
         // Write data to local
@@ -88,12 +88,14 @@ class LoginScreenState extends State<LoginScreen> {
         await prefs.setString('id', currentUser.uid);
         await prefs.setString('nickname', currentUser.displayName);
         await prefs.setString('photoUrl', currentUser.photoUrl);
+        await prefs.setString('chattingWith', 'artyom_and_kate');
       } else {
         // Write data to local
         await prefs.setString('id', documents[0]['id']);
         await prefs.setString('nickname', documents[0]['nickname']);
         await prefs.setString('photoUrl', documents[0]['photoUrl']);
         await prefs.setString('aboutMe', documents[0]['aboutMe']);
+        await prefs.setString('chattingWith',  documents[0]['chattingWith']);
       }
       _showToast("Авторизация прошла успешно");
       this.setState(() {
@@ -152,7 +154,7 @@ class LoginScreenState extends State<LoginScreen> {
               child: FlatButton(
                   onPressed: handleSignIn,
                   child: Text(
-                    'SIGN IN WITH GOOGLE',
+                    'Войти с помощью Google',
                     style: TextStyle(fontSize: 16.0),
                   ),
                   color: Color(0xffdd4b39),
