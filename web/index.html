@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Site for wedding">
+
+  <meta name="google-signin-client_id" content="ADD-HERE.apps.googleusercontent.com">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="НашаСвадьба">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>НашаСвадьба</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+<script src="/__/firebase/7.19.1/firebase-app.js"></script>
+<script src="/__/firebase/7.19.1/firebase-analytics.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+
+<script src="/__/firebase/init.js"></script>
+<script>
+    var firebaseConfig = {
+apiKey: "AIzaSyBeFcH2vh_xH49o007L5yb_bOeMEZ1S92w",
+        authDomain: "wedding-59444.firebaseapp.com",
+        databaseURL: "https://wedding-59444.firebaseio.com",
+        projectId: "wedding-59444",
+        storageBucket: "wedding-59444.appspot.com",
+        messagingSenderId: "979975989948",
+        appId: "1:979975989948:web:1847e446c06e0e2096beb9",
+        measurementId: "G-HP3MK91326"
+      };
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js');
+      });
+    }
+  </script>
+  <script src="main.dart.js" type="application/javascript"></script>
+</body>
+</html>
