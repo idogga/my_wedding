@@ -20,12 +20,20 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-<script src="/__/firebase/7.19.1/firebase-app.js"></script>
-<script src="/__/firebase/7.19.1/firebase-analytics.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
-
+<script src="/../firebase/7.19.1/firebase-app.js"></script>
+<script src="/../firebase/7.19.1/firebase-analytics.js"></script>
+<script src="/__/firebase/7.19.1/firebase-auth.js"></script>
+<script src="/__/firebase/7.19.1/firebase-firestore.js"></script
 <script src="/__/firebase/init.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js');
+      });
+    }
+  </script>
+
 <script>
     var firebaseConfig = {
 apiKey: "AIzaSyBeFcH2vh_xH49o007L5yb_bOeMEZ1S92w",
@@ -39,14 +47,6 @@ apiKey: "AIzaSyBeFcH2vh_xH49o007L5yb_bOeMEZ1S92w",
       };
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
-  </script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js');
-      });
-    }
   </script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
