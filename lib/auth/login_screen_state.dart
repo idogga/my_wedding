@@ -53,7 +53,6 @@ class LoginScreenState extends State<LoginScreen> {
 
     try{
       prefs = await SharedPreferences.getInstance();
-
       this.setState(() {
         isLoading = true;
       });
@@ -116,9 +115,16 @@ class LoginScreenState extends State<LoginScreen> {
     }
 
   }
+  
+  catch (e){
+_showToast(e);
+  }
+  }
 
   _showToast(String text) {
-    Widget toast = Container(
+    print(text);
+    
+    var toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),

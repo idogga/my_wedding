@@ -212,7 +212,7 @@ class UserPageState extends State<UserPage>
     await prefs.setString('aboutMe', _about_me);
     MyApp.analytics
         .logViewItemList(itemCategory: "Обновление ника и информации о себе");
-    print('Сохраненение ${_name} : ${_about_me}');
+    print('Сохраненение $_name : $_about_me');
     setState(() {});
   }
 
