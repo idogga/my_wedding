@@ -62,26 +62,27 @@ class HomePageState extends State<HomePage> {
     firebaseMessaging.requestNotificationPermissions();
 
     firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
-      print('onMessage: $message');
+      print('Получено сообщение: $message');
       Platform.isAndroid
           ? _showNotification(message['notification'])
           : _showNotification(message['aps']['alert']);
       return;
     }, onResume: (Map<String, dynamic> message) {
-      print('onResume: $message');
+      print('Сообщение onResume: $message');
       return;
     }, onLaunch: (Map<String, dynamic> message) {
-      print('onLaunch: $message');
+      print('Сообщение onLaunch: $message');
       return;
     });
 
     firebaseMessaging.getToken().then((token) {
-      print('token: $token');
+      print('Firebase token: $token');
       Firestore.instance
           .collection('users')
           .document(currentUserId)
           .updateData({'pushToken': token});
     }).catchError((err) {
+      print(err);
       //Fluttertoast.showToast(msg: err.message.toString());
     });
   }
@@ -97,9 +98,7 @@ class HomePageState extends State<HomePage> {
 
   _showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-      Platform.isAndroid
-          ? 'com.dfa.flutterchatdemo'
-          : 'com.duytq.flutterchatdemo',
+      'com.lenkostudio.wedding',
       'Flutter chat demo',
       'your channel description',
       playSound: true,
@@ -119,9 +118,9 @@ class HomePageState extends State<HomePage> {
         message['body'].toString(), platformChannelSpecifics,
         payload: json.encode(message));
 
-//    await flutterLocalNotificationsPlugin.show(
-//        0, 'plain title', 'plain body', platformChannelSpecifics,
-//        payload: 'item x');
+    // await flutterLocalNotificationsPlugin.show(
+    //     0, 'plain title', 'plain body', platformChannelSpecifics,
+    //     payload: 'item x');
   }
 
   _getPage(int page) {
